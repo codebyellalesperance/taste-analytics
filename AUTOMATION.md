@@ -21,13 +21,15 @@ Add these secrets:
 
 **TWITTER_AUTH_TOKEN**
 ```
-0e124ea53bdd9d743362087b4b85294992f4e3c0
+<your-twitter-auth-token>
 ```
 
 **TWITTER_CT0**
 ```
-1880628f5082da99b5c67085a9cbbea6127d3ee115f5ffdef882fa881b339694d6b79a70c7f1721e96f526d42ab2c8d12450cd44744248f1b3efbe95ac30a78c32948f2fd5ddcf0c92e3a07098b6226d
+<your-twitter-ct0-token>
 ```
+
+(Get these from your browser cookies after logging into Twitter)
 
 ### 2. Enable GitHub Actions Permissions
 
