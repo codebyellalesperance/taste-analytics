@@ -207,7 +207,7 @@ def main():
         'key_creators': creators
     }
     
-    with open('/home/ubuntu/taste-engine/data/tiktok_latest.json', 'w') as f:
+    with open('data/tiktok_latest.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print("\n✅ TikTok data saved")

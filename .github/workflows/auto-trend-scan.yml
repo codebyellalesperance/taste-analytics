@@ -25,6 +25,10 @@ jobs:
         run: |
           pip install requests
       
+      - name: Create data directories
+        run: |
+          mkdir -p data output
+      
       - name: Install bird CLI
         run: |
           npm install -g @steipete/bird
@@ -82,10 +86,9 @@ jobs:
         run: |
           git config --global user.name "Taste Engine Bot"
           git config --global user.email "bot@tasteengine.com"
-          git add data/*.json output/*.json
+          git add data/*.json output/*.json 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || \
-            git commit -m "🤖 Auto-scan: $(date +'%Y-%m-%d %H:%M UTC')"
-          git push
+            git commit -m "🤖 Auto-scan: $(date +'%Y-%m-%d %H:%M UTC')" && git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       

@@ -127,7 +127,7 @@ def main():
         'stockx_data': data
     }
     
-    with open('/home/ubuntu/taste-engine/data/stockx_latest.json', 'w') as f:
+    with open('data/stockx_latest.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print("\n✅ Data saved")

@@ -99,7 +99,7 @@ def main():
             print(f"  {term}")
     
     # Save
-    with open('/home/ubuntu/taste-engine/data/reddit_latest.json', 'w') as f:
+    with open('data/reddit_latest.json', 'w') as f:
         json.dump({
             'timestamp': datetime.datetime.now().isoformat(),
             'reddit_data': data

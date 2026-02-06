@@ -169,7 +169,7 @@ def main():
         'data_sources': list(data.keys())
     }
     
-    with open('/home/ubuntu/taste-engine/output/master_analysis.json', 'w') as f:
+    with open('output/master_analysis.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print(f"💾 Analysis saved to output/master_analysis.json")

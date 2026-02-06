@@ -248,7 +248,7 @@ def main():
         }
     }
     
-    with open('/home/ubuntu/taste-engine/data/runway_latest.json', 'w') as f:
+    with open('data/runway_latest.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print("✅ Runway data saved")

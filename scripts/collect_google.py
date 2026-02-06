@@ -49,7 +49,7 @@ def main():
             results['google_trends'][term] = trend_data
             
     # Save results
-    output_file = f"/home/ubuntu/taste-engine/data/google_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    output_file = f"data/google_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     

@@ -117,7 +117,7 @@ def main():
         'insights': insights
     }
     
-    output_file = f"/home/ubuntu/taste-engine/output/dashboard_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    output_file = f"output/dashboard_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     Path("/home/ubuntu/taste-engine/output").mkdir(exist_ok=True)
     with open(output_file, 'w') as f:
         json.dump(output, f, indent=2)

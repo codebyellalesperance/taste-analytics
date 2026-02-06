@@ -106,7 +106,7 @@ def main():
         print(f"{i}. {post}\n")
     
     # Save posts
-    with open('/home/ubuntu/taste-engine/output/posts.txt', 'w') as f:
+    with open('output/posts.txt', 'w') as f:
         for post in posts:
             f.write(post + "\n\n")
     

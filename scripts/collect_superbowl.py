@@ -314,7 +314,7 @@ def main():
         'total_fashion_ad_spend': total_fashion_spend
     }
     
-    with open('/home/ubuntu/taste-engine/data/ads_latest.json', 'w') as f:
+    with open('data/ads_latest.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print("✅ Ad intelligence saved")

@@ -212,7 +212,7 @@ def main():
         'predictions': predictions
     }
     
-    with open('/home/ubuntu/taste-engine/output/ultimate_analysis.json', 'w') as f:
+    with open('output/ultimate_analysis.json', 'w') as f:
         json.dump(output, f, indent=2)
     
     print("\n💾 Full analysis saved")
