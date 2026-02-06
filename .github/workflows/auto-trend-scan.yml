@@ -60,27 +60,15 @@ jobs:
       - name: Generate posts
         run: python3 scripts/generate_posts.py
       
-      - name: Post to Twitter
-        env:
-          TWITTER_AUTH: ${{ secrets.TWITTER_AUTH_TOKEN }}
-          TWITTER_CT0: ${{ secrets.TWITTER_CT0 }}
+      - name: Save posts for review
         run: |
-          # Read generated posts and post the top 3
-          bird tweet "$(head -1 output/posts.txt)" \
-            --auth-token "$TWITTER_AUTH" \
-            --ct0 "$TWITTER_CT0"
-          
-          sleep 300  # Wait 5 minutes between posts
-          
-          bird tweet "$(sed -n '3p' output/posts.txt)" \
-            --auth-token "$TWITTER_AUTH" \
-            --ct0 "$TWITTER_CT0"
-          
-          sleep 300
-          
-          bird tweet "$(sed -n '5p' output/posts.txt)" \
-            --auth-token "$TWITTER_AUTH" \
-            --ct0 "$TWITTER_CT0"
+          echo "📱 Generated Posts:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. $(head -1 output/posts.txt || echo 'No posts generated')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "2. $(sed -n '3p' output/posts.txt || echo '')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "3. $(sed -n '5p' output/posts.txt || echo '')" >> $GITHUB_STEP_SUMMARY
       
       - name: Commit updated data
         run: |
