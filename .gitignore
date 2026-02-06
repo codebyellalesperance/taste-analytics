@@ -1,0 +1,28 @@
+# Data files
+data/*.json
+output/*.json
+output/posts.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# Credentials (NEVER commit these)
+.env
+config.json
+*creds*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
