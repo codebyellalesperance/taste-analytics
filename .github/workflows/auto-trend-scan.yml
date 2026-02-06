@@ -1,0 +1,99 @@
+name: Automated Trend Scanning & Posting
+
+on:
+  # Run every 3 hours
+  schedule:
+    - cron: '0 */3 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  scan-and-post:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+      
+      - name: Install bird CLI
+        run: |
+          npm install -g @steipete/bird
+      
+      - name: Scan TikTok trends
+        run: python3 scripts/collect_tiktok.py
+      
+      - name: Scan Twitter trends
+        env:
+          TWITTER_AUTH: ${{ secrets.TWITTER_AUTH_TOKEN }}
+          TWITTER_CT0: ${{ secrets.TWITTER_CT0 }}
+        run: python3 scripts/collect_twitter.py
+      
+      - name: Scan StockX prices
+        run: python3 scripts/collect_stockx.py
+      
+      - name: Scan Reddit sentiment
+        run: python3 scripts/collect_reddit.py
+      
+      - name: Scan Runway trends
+        run: python3 scripts/collect_runway.py
+      
+      - name: Scan Super Bowl ads
+        run: python3 scripts/collect_superbowl.py
+      
+      - name: Generate ultimate analysis
+        run: python3 scripts/ultimate_dashboard.py
+      
+      - name: Generate posts
+        run: python3 scripts/generate_posts.py
+      
+      - name: Post to Twitter
+        env:
+          TWITTER_AUTH: ${{ secrets.TWITTER_AUTH_TOKEN }}
+          TWITTER_CT0: ${{ secrets.TWITTER_CT0 }}
+        run: |
+          # Read generated posts and post the top 3
+          bird tweet "$(head -1 output/posts.txt)" \
+            --auth-token "$TWITTER_AUTH" \
+            --ct0 "$TWITTER_CT0"
+          
+          sleep 300  # Wait 5 minutes between posts
+          
+          bird tweet "$(sed -n '3p' output/posts.txt)" \
+            --auth-token "$TWITTER_AUTH" \
+            --ct0 "$TWITTER_CT0"
+          
+          sleep 300
+          
+          bird tweet "$(sed -n '5p' output/posts.txt)" \
+            --auth-token "$TWITTER_AUTH" \
+            --ct0 "$TWITTER_CT0"
+      
+      - name: Commit updated data
+        run: |
+          git config --global user.name "Taste Engine Bot"
+          git config --global user.email "bot@tasteengine.com"
+          git add data/*.json output/*.json
+          git diff --quiet && git diff --staged --quiet || \
+            git commit -m "🤖 Auto-scan: $(date +'%Y-%m-%d %H:%M UTC')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload analysis artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: trend-analysis-${{ github.run_number }}
+          path: |
+            output/*.json
+            data/*_latest.json
+          retention-days: 30

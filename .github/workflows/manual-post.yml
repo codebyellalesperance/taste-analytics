@@ -1,0 +1,26 @@
+name: Manual Post to Twitter
+
+on:
+  workflow_dispatch:
+    inputs:
+      tweet_text:
+        description: 'Tweet content'
+        required: true
+        type: string
+
+jobs:
+  post-tweet:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Install bird CLI
+        run: npm install -g @steipete/bird
+      
+      - name: Post to Twitter
+        env:
+          TWITTER_AUTH: ${{ secrets.TWITTER_AUTH_TOKEN }}
+          TWITTER_CT0: ${{ secrets.TWITTER_CT0 }}
+        run: |
+          bird tweet "${{ inputs.tweet_text }}" \
+            --auth-token "$TWITTER_AUTH" \
+            --ct0 "$TWITTER_CT0"
